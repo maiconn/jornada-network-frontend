@@ -21,7 +21,7 @@ function EditProfile({user, dispatch}: any & DispatchProp) {
         atualizarUsuario(dispatch, values);
     }
     return (
-        <>
+        <Grid>
             <Header/>
             <Box sx={{width: '100%'}}>
                 <Container component="div" maxWidth="xs">
@@ -81,7 +81,7 @@ function EditProfile({user, dispatch}: any & DispatchProp) {
                     <Footer sx={{mt: 5}}/>
                 </Container>
             </Box>
-        </>
+        </Grid>
     );
 }
 

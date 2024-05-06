@@ -136,7 +136,7 @@ function MenuApp({user, dispatch}: any & DispatchProp) {
         </StyledBox>
     );
 
-    return <Box component="nav">
+    return <Box component="nav" maxWidth="xs" className={"loginMain"} >
         <AppBar position="static">
             <Toolbar>
                 <IconButton onClick={toggleSlider}>
