@@ -1,0 +1,15 @@
+.perfil {
+    background-color: #ddd;
+    border-radius: 100%;
+    height: 80px;
+    object-fit: cover;
+    width: 80px;
+}
+
+.loginMain {
+    position:absolute;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
+}
