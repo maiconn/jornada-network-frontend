@@ -26,7 +26,7 @@ const StyledBox = styled(Box)({
     height: "100%"
 });
 
-function MenuApp({user, dispatch}: any & DispatchProp) {
+function MenuApp({hideMenu, user, dispatch}: boolean & any & DispatchProp) {
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
 
@@ -36,6 +36,11 @@ function MenuApp({user, dispatch}: any & DispatchProp) {
 
     const toggleSlider = () => {
         setOpen(!open);
+    };
+
+    const gotoHome = () => {
+        navigate('/');
+        toggleSlider();
     };
 
 
@@ -139,10 +144,11 @@ function MenuApp({user, dispatch}: any & DispatchProp) {
     return <Box component="nav" maxWidth="xs" className={"loginMain"} >
         <AppBar position="static">
             <Toolbar>
-                <IconButton onClick={toggleSlider}>
+                {hideMenu ? '' : <IconButton onClick={toggleSlider}>
                     <Menu/>
-                </IconButton>
-                <Typography>Jornada</Typography>
+                </IconButton>}
+
+                <Typography onClick={gotoHome} style={{cursor: 'pointer'}}>Jornada</Typography>
                 <Drawer open={open} anchor="left" onClose={toggleSlider}>
                     {sideList()}
                 </Drawer>

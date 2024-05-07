@@ -103,7 +103,7 @@ function Login({dispatch}: any & DispatchProp) {
                                 Esqueceu a Senha?
                             </Link>
                             <br/>
-                            <Link href="#">
+                            <Link href="/nova-conta">
                                 {"Não tem conta? Cadastre-se"}
                             </Link>
 

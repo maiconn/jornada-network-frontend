@@ -7,12 +7,14 @@ import {PrivateRoute} from "./Generic/PrivateRoute";
 import EditProfile from "./EditProfile";
 import Empresa from "./Empresa";
 import Personal from "./Personal";
+import NovaConta from "./NovaConta";
 
 function App() {
   return (
       <BrowserRouter>
           <Routes>
               <Route path="/" element={<Login/>}/>
+              <Route path="/nova-conta" element={<NovaConta/>}/>
               <Route path="/home" element={
                   <PrivateRoute>
                       <Home/>

@@ -13,17 +13,19 @@ import ConfirmarSenhaField from "./Field/ConfirmarSenhaField.tsx";
 import FileField from "../Generic/FileField.tsx";
 import Button from "@mui/material/Button";
 import {Footer} from "../Footer";
-import {atualizarUsuario, UsuarioForm, validation} from "./actions.ts";
+import {criarUsuario, UsuarioForm, validation} from "./actions.ts";
+import UsuarioField from "./Field/UsuarioField.tsx";
+import BioField from "./Field/BioField.tsx";
 
 
-function EditProfile({user, dispatch}: any & DispatchProp) {
+function NovaConta({dispatch}: DispatchProp) {
     const onSubmit = async (values: Partial<UsuarioForm>) => {
-        atualizarUsuario(dispatch, values);
+        criarUsuario(dispatch, values);
     }
     return (
         <Grid>
-            <Header />
-            <Box sx={{width: '100%'}}>
+            <Header hideMenu={true}/>
+            <Box>
                 <Container component="div" maxWidth="xs">
                     <Box
                         sx={{
@@ -33,20 +35,13 @@ function EditProfile({user, dispatch}: any & DispatchProp) {
                             alignItems: 'center',
                         }}
                     >
-                        <div style={{display: "flex", justifyContent: "center", marginTop: "0em"}}>
-                            <img
-                                className="perfil"
-                                src={convertStringToFoto(user ? user.foto : null)}
-                                alt={user.nome}
-                            />
-                        </div>
+
                         <Typography component="h1" variant="h5">
-                            Editar Usuário
+                            Criar Usuário
                         </Typography>
                         <Form
                             onSubmit={onSubmit}
                             validate={validation}
-                            initialValues={user ?? {...user, senhaConfirm: user.senha}}
                             render={({handleSubmit}) => (
                                 <form onSubmit={handleSubmit}>
                                     <Grid container spacing={2}>
@@ -57,13 +52,25 @@ function EditProfile({user, dispatch}: any & DispatchProp) {
                                             <Field name="email" component={EmailField}/>
                                         </Grid>
                                         <Grid item xs={12}>
+                                            <Field name="bio" component={BioField}/>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Field name="usuario" component={UsuarioField}/>
+                                        </Grid>
+                                        <Grid item xs={12}>
                                             <Field name="senha" component={SenhaField}/>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Field name="senhaConfirm" component={ConfirmarSenhaField}/>
+                                            <Field name="confirmarSenha" component={ConfirmarSenhaField}/>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <FileField name="files"/>
+                                            <div style={{display: "flex", justifyContent: "center", marginTop: "0em"}}>
+                                                <img
+                                                    className="perfil"
+                                                    src={convertStringToFoto(null)}
+                                                />
+                                            </div>
+                                            <FileField name="files" style={{"position":"relative"}}/>
                                         </Grid>
                                     </Grid>
                                     <Button
@@ -88,4 +95,4 @@ function EditProfile({user, dispatch}: any & DispatchProp) {
 const mapStateToProps = (state: RootState) => ({
     user: state.userReducer.user
 })
-export default connect(mapStateToProps)(EditProfile)
+export default connect(mapStateToProps)(NovaConta)

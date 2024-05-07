@@ -43,7 +43,7 @@ function Personal() {
                                      open={open}
                                      setOpen={setOpen}/>
 
-                        <Header/>
+                        <Header />
                         <Container component="div" maxWidth="md">
                             <Box
                                 sx={{

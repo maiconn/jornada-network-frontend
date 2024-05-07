@@ -1,9 +1,11 @@
 import MenuApp from "../MenuApp";
 
-
-function Header() {
+interface HeaderProps {
+    hideMenu?: boolean;
+}
+function Header({hideMenu}:HeaderProps) {
     return (
-        <MenuApp/>
+        <MenuApp hideMenu={hideMenu}/>
     );
 }
 

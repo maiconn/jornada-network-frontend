@@ -8,7 +8,7 @@ function Home() {
 
     return (
         <Grid>
-            <Header/>
+            <Header />
             <p>Bem vindo ao Jornada!</p>
             <Footer/>
         </Grid>
