@@ -1,26 +1,27 @@
 import Box from '@mui/material/Box';
 import {connect, DispatchProp} from "react-redux";
-import {RootState} from "../store";
+import {RootState} from "../../store";
 import {Container, Typography} from '@mui/material';
-import Header from "../Header";
+import Header from "../../Header";
 import Grid from "@mui/material/Grid";
-import {convertStringToFoto} from "../Generic/functions.ts";
+import {convertStringToFoto} from "../../Generic/functions.ts";
 import {Field, Form} from "react-final-form";
 import NomeField from "./Field/NomeField.tsx";
 import EmailField from "./Field/EmailField.tsx";
 import SenhaField from "./Field/SenhaField.tsx";
 import ConfirmarSenhaField from "./Field/ConfirmarSenhaField.tsx";
-import FileField from "../Generic/FileField.tsx";
+import FileField from "../../Generic/FileField.tsx";
 import Button from "@mui/material/Button";
-import {Footer} from "../Footer";
+import {Footer} from "../../Footer";
 import {criarUsuario, UsuarioForm, validation} from "./actions.ts";
 import UsuarioField from "./Field/UsuarioField.tsx";
-import BioField from "./Field/BioField.tsx";
+import {useNavigate} from "react-router-dom";
 
 
-function NovaConta({dispatch}: DispatchProp) {
+function NovaContaDadosPrincipais({dispatch}: DispatchProp) {
+    const navigate = useNavigate();
     const onSubmit = async (values: Partial<UsuarioForm>) => {
-        criarUsuario(dispatch, values);
+        criarUsuario(dispatch, values, navigate);
     }
     return (
         <Grid>
@@ -50,9 +51,6 @@ function NovaConta({dispatch}: DispatchProp) {
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Field name="email" component={EmailField}/>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <Field name="bio" component={BioField}/>
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Field name="usuario" component={UsuarioField}/>
@@ -95,4 +93,4 @@ function NovaConta({dispatch}: DispatchProp) {
 const mapStateToProps = (state: RootState) => ({
     user: state.userReducer.user
 })
-export default connect(mapStateToProps)(NovaConta)
+export default connect(mapStateToProps)(NovaContaDadosPrincipais)

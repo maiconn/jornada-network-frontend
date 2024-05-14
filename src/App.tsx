@@ -7,14 +7,21 @@ import {PrivateRoute} from "./Generic/PrivateRoute";
 import EditProfile from "./EditProfile";
 import Empresa from "./Empresa";
 import Personal from "./Personal";
-import NovaConta from "./NovaConta";
+import NovaContaDadosPrincipais from "./NovaConta/DadosPrincipais";
+import NovaContaDadosPessoais from "./NovaConta/DadosPessoais";
+
 
 function App() {
   return (
       <BrowserRouter>
           <Routes>
               <Route path="/" element={<Login/>}/>
-              <Route path="/nova-conta" element={<NovaConta/>}/>
+              <Route path="/nova-conta" element={<NovaContaDadosPrincipais/>}/>
+              <Route path="/nova-conta-dados-pessoais" element={
+                  <PrivateRoute>
+                     <NovaContaDadosPessoais/>
+                  </PrivateRoute>
+              }/>
               <Route path="/home" element={
                   <PrivateRoute>
                       <Home/>

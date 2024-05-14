@@ -1,9 +1,9 @@
 import {useField} from "react-final-form";
 import {TextField} from "@mui/material";
-import {textRange} from "../../Generic/functions";
+import {textRange} from "../../../Generic/functions.ts";
 
-function ConfirmarSenhaField() {
-    const {input, meta} = useField<string>('confirmarSenha');
+function SenhaField() {
+    const {input, meta} = useField<string>('senha');
 
     return (
         <TextField
@@ -12,7 +12,7 @@ function ConfirmarSenhaField() {
             onChange={e => input.onChange(textRange(e.target.value, 255))}
             onFocus={input.onFocus}
             onBlur={input.onBlur}
-            label="Confirmar Senha"
+            label="Senha"
             type="password"
             error={meta.touched && meta.invalid}
             helperText={meta.touched && meta.invalid ? meta.error : undefined}
@@ -22,4 +22,4 @@ function ConfirmarSenhaField() {
     );
 }
 
-export default ConfirmarSenhaField;
+export default SenhaField;

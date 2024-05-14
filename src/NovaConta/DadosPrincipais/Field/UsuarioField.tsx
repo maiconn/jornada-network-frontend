@@ -1,6 +1,6 @@
 import {useField} from "react-final-form";
 import {TextField} from "@mui/material";
-import {textRange} from "../../Generic/functions";
+import {textRange} from "../../../Generic/functions.ts";
 
 function NomeField() {
     const {input, meta} = useField<string>('usuario');
