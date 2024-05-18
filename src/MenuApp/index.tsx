@@ -120,7 +120,7 @@ function MenuApp({hideMenu, user, dispatch}: boolean & any & DispatchProp) {
             <div style={{display: "flex", justifyContent: "center", marginTop: "1em"}}>
                 <img
                     className="perfil"
-                    src={convertStringToFoto(user ? user.foto : null)}
+                    src={convertStringToFoto(user ? user.fotoPerfil : null)}
                     alt={user.nome}
                 />
             </div>

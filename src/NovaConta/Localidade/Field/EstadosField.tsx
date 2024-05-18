@@ -1,25 +1,12 @@
-import {useField} from "react-final-form";
+import {useField, useForm} from "react-final-form";
 import {MenuItem, TextField} from "@mui/material";
 import React, {useContext} from "react";
-import debounce from 'lodash.debounce';
 import {Estado, LocalidadeContext} from "../context.tsx";
 
 function EstadosField() {
-    const {input, meta} = useField<Estado>('uf');
+    const {input, meta} = useField<Estado>('estado');
+    const form = useForm();
     const {estados, findAllCidadesPorUF} = useContext(LocalidadeContext);
-
-    const doFilter = debounce(query => {
-        // if (!query) return setFiltro({
-        //     page: 0,
-        //     size: 20,
-        // });
-        //
-        // setFiltro({
-        //     page: 0,
-        //     size: 20,
-        //     nome: query,
-        // })
-    }, 500);
 
     return (
         <TextField
@@ -28,6 +15,7 @@ function EstadosField() {
                 value: input.value,
                 onChange: e => {
                     findAllCidadesPorUF(e.target.value);
+                    form.change("cidade", null);
                     input.onChange(e);
                 },
                 onFocus: input.onFocus,

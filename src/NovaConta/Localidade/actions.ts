@@ -4,21 +4,20 @@ import {tratarErro} from "../../Generic/functions.ts";
 import {AppDispatch} from "../../store";
 import * as yup from "yup";
 import {NavigateFunction} from "react-router-dom";
-import {Habilidade} from "../context.tsx";
+import {Cidade, Estado} from "./context.tsx";
 
 
-export interface UsuarioDadosPessoaisForm {
-    bio: string;
-    habilidades: Array<Habilidade>;
+export interface LocalizacaoForm {
+    cidade: Cidade;
+    estado: Estado;
 }
-
 
 
 const schema = yup.object().shape({
 
 });
 
-export const validation = async (values: Partial<UsuarioDadosPessoaisForm>) => {
+export const validation = async (values: Partial<LocalizacaoForm>) => {
     return schema
         .validate(values, {abortEarly: false})
         .then(() => undefined)
@@ -34,40 +33,21 @@ export const validation = async (values: Partial<UsuarioDadosPessoaisForm>) => {
         });
 };
 
-export const criarDadosPessoais = async (dispatch: AppDispatch, values: Partial<UsuarioDadosPessoaisForm>, navigate: NavigateFunction) => {
+export const criarLocalizacao = async (dispatch: AppDispatch, values: Partial<LocalizacaoForm>, navigate: NavigateFunction) => {
     Loading.circle();
 
     try {
-        const usuarioSalvo = await api.post('/usuario/dados-pessoais', {
-            bio: values.bio,
-            habilidades: values.habilidades
+        const usuarioSalvo = await api.post('/usuario/localizacao', {
+            idEstado: values.estado.id,
+            idCidade: values.cidade.id,
         }, {
             headers: {
                 'content-type': 'application/json'
             }
         });
-
-        dispatch({type: "SET_USER", user: usuarioSalvo});
+        dispatch({type: "SET_USER", user: usuarioSalvo.data});
         Notify.success("Perfil salvo com sucesso!");
-        navigate("/nova-conta-contatos")
-    } catch (error) {
-        tratarErro(error);
-    } finally {
-        Loading.remove();
-    }
-};
-
-export const buscarHabilidades = async () => {
-    Loading.circle();
-
-    try {
-        const habilidades = await api.get('/habilidade', {
-            headers: {
-                'content-type': 'application/json'
-            }
-        });
-
-        return habilidades;
+        navigate("/home")
     } catch (error) {
         tratarErro(error);
     } finally {

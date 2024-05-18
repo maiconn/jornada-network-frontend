@@ -2,6 +2,7 @@ import Header from "../Header";
 import {connect} from "react-redux";
 import Grid from "@mui/material/Grid";
 import {Footer} from "../Footer";
+import Perfil from "../Perfil";
 
 
 function Home() {
@@ -9,7 +10,7 @@ function Home() {
     return (
         <Grid>
             <Header />
-            <p>Bem vindo ao Jornada!</p>
+            <Perfil />
             <Footer/>
         </Grid>
     );

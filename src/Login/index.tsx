@@ -80,7 +80,7 @@ function Login({dispatch}: any & DispatchProp) {
                         </Typography>
                         <Box component="form" noValidate onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
                             login(dispatch, event, navigate)
-                        }} sx={{ m: 1, width: '40ch' }}>
+                        }} sx={{ m: 1 }}>
                             <TextField
                                 margin="normal"
                                 required

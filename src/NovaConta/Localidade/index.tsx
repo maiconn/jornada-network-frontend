@@ -7,17 +7,19 @@ import Grid from "@mui/material/Grid";
 import {Field, Form} from "react-final-form";
 import Button from "@mui/material/Button";
 import {Footer} from "../../Footer";
-import {criarDadosPessoais, UsuarioDadosPessoaisForm, validation} from "./actions.ts";
+
 import {useNavigate} from "react-router-dom";
 import EstadosField from "./Field/EstadosField.tsx";
 import Link from "@mui/material/Link";
 import CidadesField from "./Field/CidadesField.tsx";
+import {criarLocalizacao, LocalizacaoForm, validation} from "./actions.ts";
 
 
 function Localidade({dispatch}: DispatchProp) {
     const navigate = useNavigate();
-    const onSubmit = async (values: Partial<UsuarioDadosPessoaisForm>) => {
-        criarDadosPessoais(dispatch, values, navigate);
+    const onSubmit = async (values: Partial<LocalizacaoForm>) => {
+        console.log(values)
+        criarLocalizacao(dispatch, values, navigate);
     }
     return (
         <Grid>
@@ -43,10 +45,8 @@ function Localidade({dispatch}: DispatchProp) {
                                 <form onSubmit={handleSubmit}>
                                     <Grid container spacing={2}>
                                         <Grid item xs={12}>
-                                            <Field name="uf" component={EstadosField}/>
+                                            <Field name="estado" component={EstadosField}/>
                                         </Grid>
-                                    </Grid>
-                                    <Grid container spacing={2}>
                                         <Grid item xs={12}>
                                             <Field name="cidade" component={CidadesField}/>
                                         </Grid>

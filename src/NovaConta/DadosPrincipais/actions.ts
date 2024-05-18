@@ -14,6 +14,9 @@ export interface UsuarioForm {
     confirmarSenha: string;
     usuario: string;
     files: File[];
+    qtdSeguindo: number;
+    qtdSeguidores: number;
+    qtdPostagens: number;
 }
 
 export interface UsuarioFormResponse extends UsuarioForm{

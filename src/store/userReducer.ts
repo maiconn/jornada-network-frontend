@@ -3,7 +3,7 @@ import {AnyAction} from '@reduxjs/toolkit'
 export const INITIAL_STATE = {
     user: {
         nome: '',
-        foto: '',
+        fotoPerfil: '',
         email: '',
         permissoes: []
     },
