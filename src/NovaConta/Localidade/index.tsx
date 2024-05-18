@@ -8,14 +8,13 @@ import {Field, Form} from "react-final-form";
 import Button from "@mui/material/Button";
 import {Footer} from "../../Footer";
 import {criarDadosPessoais, UsuarioDadosPessoaisForm, validation} from "./actions.ts";
-import BioField from "./Field/BioField.tsx";
 import {useNavigate} from "react-router-dom";
-import HabilidadesField from "./Field/HabilidadesField.tsx";
-import {NovoUsuarioProvider} from "../context.tsx";
+import EstadosField from "./Field/EstadosField.tsx";
 import Link from "@mui/material/Link";
+import CidadesField from "./Field/CidadesField.tsx";
 
 
-function NovaContaDadosPessoais({dispatch}: DispatchProp) {
+function Localidade({dispatch}: DispatchProp) {
     const navigate = useNavigate();
     const onSubmit = async (values: Partial<UsuarioDadosPessoaisForm>) => {
         criarDadosPessoais(dispatch, values, navigate);
@@ -35,7 +34,7 @@ function NovaContaDadosPessoais({dispatch}: DispatchProp) {
                     >
 
                         <Typography component="h1" variant="h5">
-                            Dados Pessoais
+                            Sua Localização
                         </Typography>
                         <Form
                             onSubmit={onSubmit}
@@ -44,12 +43,12 @@ function NovaContaDadosPessoais({dispatch}: DispatchProp) {
                                 <form onSubmit={handleSubmit}>
                                     <Grid container spacing={2}>
                                         <Grid item xs={12}>
-                                            <Field name="bio" component={BioField}/>
+                                            <Field name="uf" component={EstadosField}/>
                                         </Grid>
+                                    </Grid>
+                                    <Grid container spacing={2}>
                                         <Grid item xs={12}>
-                                            <NovoUsuarioProvider>
-                                                <Field name="habilidades" component={HabilidadesField}/>
-                                            </NovoUsuarioProvider>
+                                            <Field name="cidade" component={CidadesField}/>
                                         </Grid>
                                     </Grid>
 
@@ -61,7 +60,7 @@ function NovaContaDadosPessoais({dispatch}: DispatchProp) {
                                     >
                                         Salvar
                                     </Button>
-                                    <Link href="/nova-conta-contatos">Preencher depois</Link>
+                                    <Link href="/home">Preencher depois</Link>
                                 </form>
                             )}
                         />
@@ -76,4 +75,4 @@ function NovaContaDadosPessoais({dispatch}: DispatchProp) {
 const mapStateToProps = (state: RootState) => ({
     user: state.userReducer.user
 })
-export default connect(mapStateToProps)(NovaContaDadosPessoais)
+export default connect(mapStateToProps)(Localidade)

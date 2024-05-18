@@ -9,6 +9,18 @@ export interface Habilidade {
     descricao: string;
 }
 
+export interface Contato {
+    idContato: number;
+    descricao: string;
+}
+
+export interface ContatoUsuario {
+    idContato: number;
+    descricaoContato: string;
+    descricao: string;
+    visivel: boolean;
+}
+
 export interface Page {
     elements: Array<Habilidade>;
     totalElements: number;
@@ -19,10 +31,14 @@ export interface Page {
 
 export interface NovoUsuarioContextValue {
     habilidades: Array<Habilidade> | null ;
+    contatos: Array<Contato> | null ;
+    novosContatos: Array<ContatoUsuario> ;
 }
 
 export const NovoUsuarioContext = createContext<NovoUsuarioContextValue>({
     habilidades: null,
+    contatos: null,
+    novosContatos: [],
 });
 
 interface ProviderProps {
@@ -30,10 +46,11 @@ interface ProviderProps {
 }
 
 export function NovoUsuarioProvider({children}: ProviderProps) {
-    const [{habilidades}, action] = useReducer(novoUsuarioReducer, INITIAL_STATE_NOVO_USUARIO);
+    const [{habilidades, contatos, novosContatos}, action] = useReducer(novoUsuarioReducer, INITIAL_STATE_NOVO_USUARIO);
 
     useEffect(() => {
         findAllHabilidades();
+        findAllContatos();
     }, []);
 
     const findAllHabilidades = async () => {
@@ -54,12 +71,55 @@ export function NovoUsuarioProvider({children}: ProviderProps) {
         }
     }
 
+    const findAllContatos = async () => {
+        Loading.circle();
+
+        try {
+            const res = await api.get('/contato', {
+                headers: {
+                    'content-type': 'application/json'
+                }
+            });
+
+            const constatosRetorno = res.data;
+
+            const _novosContatos = [];
+
+            constatosRetorno.forEach(contato => {
+                _novosContatos.push({
+                    "idContato": contato.idContato,
+                    'descricaoContato': contato.descricao,
+                    'descricao': '',
+                    'visivel': true,
+                });
+            });
+
+            action({type: 'SET_NOVOS_CONTATOS_LIST', novosContatos: _novosContatos});
+            action({type: 'SET_CONTATOS_LIST', contatos: constatosRetorno});
+        } catch (error) {
+            tratarErro(error);
+        } finally {
+            Loading.remove();
+        }
+    }
+
     return (
         <NovoUsuarioContext.Provider
             value={{
                 habilidades,
+                contatos,
+                novosContatos,
             }}>
             {children}
         </NovoUsuarioContext.Provider>
     );
+}
+
+interface ConsumerProps {
+    children: (value: NovoUsuarioContextValue) => ReactNode;
+}
+
+
+export function NovoUsuarioConsumer({children}: ConsumerProps) {
+    return <NovoUsuarioContext.Consumer>{children}</NovoUsuarioContext.Consumer>;
 }

@@ -12,14 +12,16 @@ import Typography from '@mui/material/Typography';
 import {getToken, login} from "./actions.ts";
 import {Navigate, useNavigate} from "react-router-dom";
 import {connect, DispatchProp} from "react-redux";
+import {FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput} from '@mui/material';
+import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 function Copyright(props: any) {
     console.log(import.meta.env.VITE_APP_BACKEND)
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://gymforge.com.br/">
-                GymForge
+            <Link color="inherit" href="https://jornadati.com.br/">
+                Jornada
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -30,13 +32,21 @@ function Copyright(props: any) {
 
 function Login({dispatch}: any & DispatchProp) {
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
+
 
     if (getToken()) {
         return <Navigate to={"/home"}/>
     }
 
     return (
-            <Grid container component="main" maxWidth="xs" className={"loginMain"}>
+            <Grid container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Grid
                     item
@@ -70,7 +80,7 @@ function Login({dispatch}: any & DispatchProp) {
                         </Typography>
                         <Box component="form" noValidate onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
                             login(dispatch, event, navigate)
-                        }} sx={{ mt: 1 }}>
+                        }} sx={{ m: 1, width: '40ch' }}>
                             <TextField
                                 margin="normal"
                                 required
@@ -81,16 +91,31 @@ function Login({dispatch}: any & DispatchProp) {
                                 autoComplete="usuario"
                                 autoFocus
                             />
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="senha"
-                                label="Senha"
-                                type="password"
-                                id="senha"
-                                autoComplete="current-password"
-                            />
+                            <FormControl fullWidth>
+                                <InputLabel htmlFor="senha">Senha *</InputLabel>
+                                <OutlinedInput
+                                    type={showPassword ? 'text' : 'password'}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                edge="end"
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    required
+                                    fullWidth
+                                    name="senha"
+                                    label="Senha"
+                                    id="senha"
+                                />
+                            </FormControl>
+
+
                             <Button
                                 type="submit"
                                 fullWidth

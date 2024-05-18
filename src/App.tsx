@@ -9,39 +9,57 @@ import Empresa from "./Empresa";
 import Personal from "./Personal";
 import NovaContaDadosPrincipais from "./NovaConta/DadosPrincipais";
 import NovaContaDadosPessoais from "./NovaConta/DadosPessoais";
+import NovaContaContatos from "./NovaConta/Contatos";
+import {NovoUsuarioProvider} from "./NovaConta/context.tsx";
+import Localidade from "./NovaConta/Localidade";
+import {LocalidadeProvider} from "./NovaConta/Localidade/context.tsx";
 
 
 function App() {
-  return (
-      <BrowserRouter>
-          <Routes>
-              <Route path="/" element={<Login/>}/>
-              <Route path="/nova-conta" element={<NovaContaDadosPrincipais/>}/>
-              <Route path="/nova-conta-dados-pessoais" element={
-                  <PrivateRoute>
-                     <NovaContaDadosPessoais/>
-                  </PrivateRoute>
-              }/>
-              <Route path="/home" element={
-                  <PrivateRoute>
-                      <Home/>
-                  </PrivateRoute>
-              }/>
-              <Route path="/edit-profile" element={
-                  <PrivateRoute>
-                      <EditProfile />
-                  </PrivateRoute>}/>
-              <Route path="/empresa" element={
-                  <PrivateRoute>
-                      <Empresa />
-                  </PrivateRoute>}/>
-              <Route path="/personal" element={
-                  <PrivateRoute>
-                      <Personal />
-                  </PrivateRoute>}/>
-          </Routes>
-      </BrowserRouter>
-  )
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Login/>}/>
+                <Route path="/nova-conta" element={<NovaContaDadosPrincipais/>}/>
+                <Route path="/nova-conta-dados-pessoais" element={
+                    <PrivateRoute>
+                        <NovaContaDadosPessoais/>
+                    </PrivateRoute>
+                }/>
+                <Route path="/nova-conta-contatos" element={
+                    <PrivateRoute>
+                        <NovoUsuarioProvider>
+                            <NovaContaContatos/>
+                        </NovoUsuarioProvider>
+                    </PrivateRoute>
+                }/>
+                <Route path="/nova-conta-localidade" element={
+                    <PrivateRoute>
+                        <LocalidadeProvider>
+                            <Localidade/>
+                        </LocalidadeProvider>
+                    </PrivateRoute>
+                }/>
+                <Route path="/home" element={
+                    <PrivateRoute>
+                        <Home/>
+                    </PrivateRoute>
+                }/>
+                <Route path="/edit-profile" element={
+                    <PrivateRoute>
+                        <EditProfile/>
+                    </PrivateRoute>}/>
+                <Route path="/empresa" element={
+                    <PrivateRoute>
+                        <Empresa/>
+                    </PrivateRoute>}/>
+                <Route path="/personal" element={
+                    <PrivateRoute>
+                        <Personal/>
+                    </PrivateRoute>}/>
+            </Routes>
+        </BrowserRouter>
+    )
 }
 
 export default App;
