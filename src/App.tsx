@@ -3,7 +3,7 @@ import Login from "./Login";
 import {Route} from "react-router";
 import {BrowserRouter, Routes} from "react-router-dom";
 import Home from "./Home";
-import {PrivateRoute} from "./Generic/PrivateRoute";
+import PrivateRoute from "./Generic/PrivateRoute";
 import EditProfile from "./EditProfile";
 import Empresa from "./Empresa";
 import Personal from "./Personal";

@@ -4,7 +4,6 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import {RootState} from "../store";
 import {convertStringToFoto} from "../Generic/functions.ts";
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import {FitnessCenter} from "@mui/icons-material";
 
 
@@ -42,13 +41,13 @@ function Perfil({user, dispatch}: any & DispatchProp) {
                     </Typography>
                     <Typography variant="body2">
                         <FitnessCenter />
-                        {user.habilidades.map(habilidade => habilidade.descricao).join(", ")}
+                        {user.habilidades ? user.habilidades.map(habilidade => habilidade.descricao).join(", ") : ''}
                     </Typography>
                     <Typography variant="body2">
                         Contatos:
                         <br/>
                         <br/>
-                        {user.contatos
+                        {user.contatos ? user.contatos
                             .filter(contato => contato.descricao !== '' && contato.visivel == true)
                             .map(contato => (
                                 <>
@@ -63,7 +62,7 @@ function Perfil({user, dispatch}: any & DispatchProp) {
                                     <br />
                                 </>
                                 )
-                            )}
+                            ) : ''}
                     </Typography>
                 </Grid>
             </Grid>

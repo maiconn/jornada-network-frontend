@@ -5,7 +5,8 @@ export const INITIAL_STATE = {
         nome: '',
         fotoPerfil: '',
         email: '',
-        permissoes: []
+        permissoes: [],
+        habilidades: [],
     },
     aluno: {
         stack: '',
@@ -27,11 +28,6 @@ export const userReducer = (state = INITIAL_STATE, action: AnyAction) => {
             return {
                 ...state,
                 user: action.user
-            }
-        case 'SET_ALUNO':
-            return {
-                ...state,
-                aluno: action.aluno
             }
         case 'RESET':
             state = INITIAL_STATE;
