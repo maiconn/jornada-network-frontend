@@ -1,13 +1,17 @@
 import {connect, DispatchProp} from "react-redux";
-import {Card, Typography} from "@mui/material";
+import {Card, IconButton, Typography} from "@mui/material";
 import React from "react";
 import Grid from "@mui/material/Grid";
 import {RootState} from "../store";
 import {convertStringToFoto} from "../Generic/functions.ts";
 import {FitnessCenter} from "@mui/icons-material";
+import SettingsIcon from '@mui/icons-material/Settings';
+import {useNavigate} from "react-router-dom";
 
 
 function Perfil({user, dispatch}: any & DispatchProp) {
+    const navigate = useNavigate();
+
     console.log(user);
     if (!user) {
         return null;
@@ -30,6 +34,9 @@ function Perfil({user, dispatch}: any & DispatchProp) {
                 <Grid xs={8}>
                     <Typography variant="body2">
                         @{user.usuario}
+                        <IconButton aria-label="delete" onClick={() => navigate("/edit-profile")}>
+                            <SettingsIcon />
+                        </IconButton>
                         <br />
                         {`${user.qtdPostagens} posts   ${user.qtdSeguidores} seguidores   ${user.qtdSeguindo} seguindo`}
                     </Typography>

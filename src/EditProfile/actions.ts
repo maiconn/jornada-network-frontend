@@ -3,12 +3,23 @@ import {Loading, Notify} from "notiflix";
 import {tratarErro} from "../Generic/functions";
 import {AppDispatch} from "../store";
 import * as yup from "yup";
+import {ContatoUsuario, Habilidade} from "../NovaConta/context.tsx";
+import {Cidade, Estado} from "../NovaConta/Localidade/context.tsx";
+import {UsuarioFormResponse} from "../NovaConta/DadosPrincipais/actions.ts";
 
 export interface UsuarioForm {
     nome: string;
     email: number;
     senha: string;
-    senhaConfirm: string;
+    confirmarSenha: string;
+    usuario: string;
+    bio: string;
+    habilidades: Array<Habilidade>;
+    contatos: Array<ContatoUsuario>;
+    idCidade: number;
+    idEstado: number;
+    cidade: Cidade;
+    estado: Estado;
     files: File[];
 }
 
@@ -22,7 +33,7 @@ const schema = yup.object().shape({
     senha: yup.string()
         .required('Campo Obrigatório!'),
 
-    senhaConfirm: yup.string()
+    confirmarSenha: yup.string()
         .oneOf([yup.ref("senha"), null], "Senhas não conferem!")
 });
 
@@ -47,34 +58,45 @@ export const atualizarUsuario = async (dispatch: AppDispatch, values: Partial<Us
     Loading.circle();
 
     try {
-        await api.post('/usuario/profile/update', {
+        const retornoAtualizacao = await api.put('/usuario', {
             nome: values.nome,
             email: values.email,
             senha: values.senha,
-            confirmarSenha: values.senhaConfirm
+            confirmarSenha: values.confirmarSenha,
+            usuario: values.usuario,
+            bio: values.bio,
+            habilidades: values.habilidades,
+            contatos: values.contatos,
+            idEstado: values.estado.id,
+            idCidade: values.cidade.id,
         }, {
             headers: {
                 'content-type': 'application/json'
             }
         });
 
-        const jsonObj = values.files?.[0] as File;
-        const enviar = {
-            profilePhoto: jsonObj
-        }
-        if (jsonObj && jsonObj?.name !== '') {
-            await api.post('/usuario/profile/upload-photo', enviar, {
-                headers: {
-                    'content-type': 'multipart/form-data'
+        if (retornoAtualizacao && retornoAtualizacao.data !== '') {
+            const usuarioAtualizado = retornoAtualizacao.data as UsuarioFormResponse;
+            if (values.files) {
+                const jsonObj = values.files?.[0] as File;
+                const enviar = {
+                    profilePhoto: jsonObj
                 }
-            }).then(resFoto => {
-                dispatch({type: "SET_USER", user: resFoto.data});
-            }).catch(error => tratarErro(error))
-                .finally(() => {
-                    Loading.remove();
-                });
+                await api.post('/usuario/upload-foto', enviar, {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                }).then(resFoto => {
+                    dispatch({type: "SET_USER", user: resFoto.data});
+                }).catch(error => tratarErro(error))
+                    .finally(() => {
+                            Loading.remove();
+                        }
+                    );
+            }
+            dispatch({type: "SET_USER", user: usuarioAtualizado});
+            Notify.success("Perfil salvo com sucesso!");
         }
-        Notify.success("Perfil salvo com sucesso!");
     } catch (error) {
         tratarErro(error);
     } finally {

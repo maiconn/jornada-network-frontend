@@ -13,6 +13,7 @@ import NovaContaContatos from "./NovaConta/Contatos";
 import {NovoUsuarioProvider} from "./NovaConta/context.tsx";
 import Localidade from "./NovaConta/Localidade";
 import {LocalidadeProvider} from "./NovaConta/Localidade/context.tsx";
+import ExibirPerfil from "./ExibirPerfil";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login/>}/>
+                <Route path="/perfil/:usuario" element={<ExibirPerfil/>}/>
                 <Route path="/nova-conta" element={<NovaContaDadosPrincipais/>}/>
                 <Route path="/nova-conta-dados-pessoais" element={
                     <PrivateRoute>
