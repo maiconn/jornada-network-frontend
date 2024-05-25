@@ -14,6 +14,7 @@ import {NovoUsuarioProvider} from "./NovaConta/context.tsx";
 import Localidade from "./NovaConta/Localidade";
 import {LocalidadeProvider} from "./NovaConta/Localidade/context.tsx";
 import ExibirPerfil from "./ExibirPerfil";
+import {PerfilProvider} from "./ExibirPerfil/context.tsx";
 
 
 function App() {
@@ -21,7 +22,11 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login/>}/>
-                <Route path="/perfil/:usuario" element={<ExibirPerfil/>}/>
+                <Route path="/perfil/:_usuario" element={
+                    <PerfilProvider>
+                        <ExibirPerfil/>
+                    </PerfilProvider>
+                }/>
                 <Route path="/nova-conta" element={<NovaContaDadosPrincipais/>}/>
                 <Route path="/nova-conta-dados-pessoais" element={
                     <PrivateRoute>
